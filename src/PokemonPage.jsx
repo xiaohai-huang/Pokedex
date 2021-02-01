@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, CircularProgress, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  Link,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -50,13 +56,15 @@ function PokemonPage() {
   } else if (status === "successed") {
     content = (
       <>
-        I am a Pokemon with ID {pokemonId}.
         <Typography variant="h3">{`${pokemon.id}. ${pokemon.name}`}</Typography>
         <img
-          style={{ width: "300px", height: "300px" }}
+          style={{ width: "280px", height: "280px" }}
           alt={pokemon.name}
           src={pokemon.imageUrl}
         />
+        <Typography>
+          Species: <Link href={pokemon.speciesUrl}>{pokemon.name}</Link>
+        </Typography>
         <Typography variant="h4">Pokemon Info</Typography>
         <Typography>Height: {pokemon.height}</Typography>
         <Typography>Weight: {pokemon.weight}</Typography>

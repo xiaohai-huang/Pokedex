@@ -7,6 +7,7 @@ function App() {
   return (
     <div className="App">
       <Switch>
+        <Redirect exact from="/" to="/pokemons" />
         <Route exact path="/pokemons" render={() => <MainPage />} />
         <Route exact path="/pokemons/:pokemonId" component={PokemonPage} />
 
