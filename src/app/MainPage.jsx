@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Header from "./Header";
-import Pokedex from "./Pokedex";
+import Pokedex from "../features/pokemons/Pokedex";
 
 const useStyles = makeStyles({
   pokedexContainer: {

@@ -6,7 +6,8 @@ import {
   fetchPokemons,
   selectSearchQuery,
   selectAllPokemons,
-} from "./features/pokemons/pokemonsSlice";
+  selectNumPokemons,
+} from "./pokemonsSlice";
 import PokemonCard from "./PokemonCard";
 import { CircularProgress, Typography } from "@material-ui/core";
 
@@ -14,6 +15,7 @@ function Pokedex() {
   const dispatch = useDispatch();
   const searchQuery = useSelector(selectSearchQuery);
   const pokemons = useSelector(selectAllPokemons);
+  const numPokemons = useSelector(selectNumPokemons);
   const status = useSelector((state) => state.pokemons.status);
   const error = useSelector((state) => state.pokemons.error);
 
@@ -22,7 +24,11 @@ function Pokedex() {
     if (status === "idle") {
       dispatch(fetchPokemons());
     }
-  });
+  }, [dispatch, status]);
+
+  useEffect(() => {
+    dispatch(fetchPokemons());
+  }, [numPokemons, dispatch]);
 
   let content;
 

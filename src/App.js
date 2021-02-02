@@ -1,18 +1,41 @@
 import { Route, Switch, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { createMuiTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
 
-import MainPage from "./MainPage";
-import PokemonPage from "./PokemonPage";
+import MainPage from "./app/MainPage";
+import SettingsPage from "./app/SettingsPage";
+import PokemonPage from "./features/pokemons/PokemonPage";
+import { selectColorMode } from "./features/app/appSlice";
 
 function App() {
+  const lightTheme = createMuiTheme({
+    palette: {
+      type: "light",
+    },
+  });
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: "dark",
+    },
+  });
+  const colorMode = useSelector(selectColorMode);
+  const theme = colorMode === "light" ? lightTheme : darkTheme;
+
   return (
     <div className="App">
-      <Switch>
-        <Redirect exact from="/" to="/pokemons" />
-        <Route exact path="/pokemons" render={() => <MainPage />} />
-        <Route exact path="/pokemons/:pokemonId" component={PokemonPage} />
-
-        <Redirect to="/" />
-      </Switch>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Switch>
+          <Redirect exact from="/" to="/pokemons" />
+          <Route exact path="/pokemons" render={() => <MainPage />} />
+          <Route exact path="/pokemons/settings">
+            <SettingsPage />
+          </Route>
+          <Route exact path="/pokemons/:pokemonId">
+            <PokemonPage />
+          </Route>
+        </Switch>
+      </ThemeProvider>
     </div>
   );
 }

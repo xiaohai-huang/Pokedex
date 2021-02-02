@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
+import SettingsIcon from "@material-ui/icons/Settings";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import { IconButton } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
-import { searchQueryUpdated } from "./features/pokemons/pokemonsSlice";
+import { searchQueryUpdated } from "../features/pokemons/pokemonsSlice";
+import { selectColorMode, colorModeUpdated } from "../features/app/appSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,10 +70,34 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [query, setQuery] = useState("");
+
+  const colorMode = useSelector(selectColorMode);
+
   useEffect(() => {
     dispatch(searchQueryUpdated(query));
   }, [query, dispatch]);
+
+  const handleSettingsClicked = () => {
+    history.push("/pokemons/settings");
+  };
+
+  const handleColorModeClicked = () => {
+    if (colorMode === "light") {
+      dispatch(colorModeUpdated("dark"));
+    } else if (colorMode === "dark") {
+      dispatch(colorModeUpdated("light"));
+    }
+  };
+
+  const colorModeToggler =
+    colorMode === "light" ? (
+      <Brightness7Icon fontSize="inherit" />
+    ) : (
+      <Brightness4Icon fontSize="inherit" />
+    );
+
   return (
     <div className={classes.root}>
       <AppBar position="sticky">
@@ -90,6 +120,12 @@ export default function Header() {
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
+          <IconButton color="inherit" onClick={handleSettingsClicked}>
+            <SettingsIcon fontSize="inherit" />
+          </IconButton>
+          <IconButton color="inherit" onClick={handleColorModeClicked}>
+            {colorModeToggler}
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

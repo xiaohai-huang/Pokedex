@@ -3,9 +3,10 @@ import axios from "axios";
 
 export const fetchPokemons = createAsyncThunk(
   "/pokemons/fetchPokemons",
-  async () => {
+  async (_, { getState }) => {
+    const numPokemons = selectNumPokemons(getState());
     const response = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?limit=100"
+      `https://pokeapi.co/api/v2/pokemon?limit=${numPokemons}`
     );
 
     const pokemons = response.data.results.map((mon, index) => {
@@ -22,6 +23,7 @@ export const fetchPokemons = createAsyncThunk(
 );
 
 const initialState = {
+  numPokemons: 20,
   searchQuery: "",
   data: [],
   status: "idle",
@@ -34,6 +36,9 @@ const pokemonsSlice = createSlice({
   reducers: {
     searchQueryUpdated: (state, action) => {
       state.searchQuery = action.payload;
+    },
+    numPokemonsUpdated: (state, action) => {
+      state.numPokemons = Number(action.payload);
     },
   },
   extraReducers: {
@@ -53,12 +58,16 @@ const pokemonsSlice = createSlice({
 
 export const selectAllPokemons = (state) => state.pokemons.data;
 
+export function selectNumPokemons(state) {
+  return state.pokemons.numPokemons;
+}
+
 export const selectPokemonsByQuery = (state, query) => {
   return state.pokemons.data.filter((pokemon) => pokemon.name.includes(query));
 };
 
 export const selectSearchQuery = (state) => state.pokemons.searchQuery;
 
-export const { searchQueryUpdated } = pokemonsSlice.actions;
+export const { searchQueryUpdated, numPokemonsUpdated } = pokemonsSlice.actions;
 
 export default pokemonsSlice.reducer;
