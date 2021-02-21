@@ -1,32 +1,33 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Box, Button, Container } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
-import Header from "./Header";
+import {
+  numPokemonsUpdated,
+  selectNumPokemons,
+} from "../features/pokemons/pokemonsSlice";
 import Pokedex from "../features/pokemons/Pokedex";
 
-const useStyles = makeStyles({
-  pokedexContainer: {
-    paddingTop: "20px",
-  },
-});
-
 function MainPage() {
-  const classes = useStyles();
+  const dispatch = useDispatch();
+  let numPokemons = useSelector(selectNumPokemons);
 
+  const showMore = () => {
+    // fetch current pokemon number
+    numPokemons = numPokemons + 20;
+    // update it
+    dispatch(numPokemonsUpdated(numPokemons));
+  };
   return (
-    <Grid container direction="column">
-      <Grid item xs={12}>
-        <Header />
-      </Grid>
-      <Grid item container className={classes.pokedexContainer}>
-        <Grid item xs={1} sm={2} />
-        <Grid item xs={10} sm={8}>
-          <Pokedex />
-        </Grid>
-        <Grid item xs={1} sm={2} />
-      </Grid>
-    </Grid>
+    <Container maxWidth="md">
+      <Box pt={3} />
+      <Pokedex />
+      <Box textAlign="center" m={3}>
+        <Button variant="contained" color="primary" onClick={showMore}>
+          Show more
+        </Button>
+      </Box>
+    </Container>
   );
 }
 

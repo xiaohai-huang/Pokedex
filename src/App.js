@@ -6,6 +6,7 @@ import MainPage from "./app/MainPage";
 import SettingsPage from "./app/SettingsPage";
 import PokemonPage from "./features/pokemons/PokemonPage";
 import { selectColorMode } from "./features/app/appSlice";
+import Header from "./app/Header";
 
 function App() {
   const lightTheme = createMuiTheme({
@@ -25,6 +26,8 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Header />
+
         <Switch>
           <Redirect exact from="/" to="/pokemons" />
           <Route exact path="/pokemons" render={() => <MainPage />} />

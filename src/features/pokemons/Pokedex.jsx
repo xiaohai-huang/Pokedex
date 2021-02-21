@@ -32,24 +32,23 @@ function Pokedex() {
 
   let content;
 
-  if (status === "successed") {
-    content = pokemons.map(
-      (pokemon) =>
-        pokemon.name.includes(searchQuery) && (
-          <Grid key={pokemon.id} item xs={12} sm={6} md={4}>
-            <PokemonCard {...pokemon} />
-          </Grid>
-        )
-    );
-  } else if (status === "loading") {
-    content = <CircularProgress color="secondary" />;
-  } else if (error) {
+  content = pokemons.map(
+    (pokemon) =>
+      pokemon.name.includes(searchQuery) && (
+        <Grid item key={pokemon.id} xs={12} sm={6} md={4}>
+          <PokemonCard {...pokemon} />
+        </Grid>
+      )
+  );
+
+  if (error) {
     content = <Typography variant="h3">Cannot find pokemons...</Typography>;
   }
 
   return (
     <Grid container spacing={3} justify="center">
       {content}
+      {status === "loading" && <CircularProgress color="secondary" />}
     </Grid>
   );
 }

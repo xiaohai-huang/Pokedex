@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
+  Box,
   Button,
   CircularProgress,
   Grid,
@@ -81,13 +82,16 @@ function PokemonPage() {
       <Grid item sm={2} />
       <>
         {content}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => history.push("/pokemons")}
-        >
-          Go Back to Pokedex
-        </Button>
+        <Box pt={2} pb={3}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => history.push("/pokemons")}
+          >
+            Go Back to Pokedex
+          </Button>
+        </Box>
       </>
       <Grid item sm={2} />
     </Grid>
