@@ -118,7 +118,9 @@ export default function Header() {
         >
           Pokemon
         </Typography>
+
         <Box className={classes.space} />
+
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />

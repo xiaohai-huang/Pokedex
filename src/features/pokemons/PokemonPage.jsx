@@ -49,7 +49,11 @@ function PokemonPage() {
   }, [pokemonId]);
   let content;
   if (status === "loading") {
-    content = <CircularProgress />;
+    content = (
+      <Box textAlign="center" pt={2}>
+        <CircularProgress />
+      </Box>
+    );
   } else if (status === "error") {
     content = (
       <Typography variant="h3">Sorry, cannot find the pokemon...</Typography>
