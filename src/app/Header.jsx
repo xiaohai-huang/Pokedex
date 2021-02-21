@@ -9,21 +9,29 @@ import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
-import { IconButton } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Box, IconButton, Tooltip } from "@material-ui/core";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 
 import { searchQueryUpdated } from "../features/pokemons/pokemonsSlice";
 import { selectColorMode, colorModeUpdated } from "../features/app/appSlice";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
   },
   title: {
-    flexGrow: 1,
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
+    },
+    textDecoration: "none",
+  },
+  space: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+      width: "100%",
     },
   },
   search: {
@@ -99,35 +107,44 @@ export default function Header() {
     );
 
   return (
-    <div className={classes.root}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Pokemon
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
+    <AppBar position="sticky">
+      <Toolbar className={classes.toolbar}>
+        <Typography
+          className={classes.title}
+          color="inherit"
+          variant="h6"
+          component={RouterLink}
+          to="/"
+        >
+          Pokemon
+        </Typography>
+        <Box className={classes.space} />
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
           </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ "aria-label": "search" }}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <Tooltip title="Settings">
           <IconButton color="inherit" onClick={handleSettingsClicked}>
             <SettingsIcon fontSize="inherit" />
           </IconButton>
+        </Tooltip>
+        <Tooltip title="Toggle light/dark theme">
           <IconButton color="inherit" onClick={handleColorModeClicked}>
             {colorModeToggler}
           </IconButton>
-        </Toolbar>
-      </AppBar>
-    </div>
+        </Tooltip>
+      </Toolbar>
+    </AppBar>
   );
 }
