@@ -9,7 +9,7 @@ import {
   selectNumPokemons,
 } from "./pokemonsSlice";
 import PokemonCard from "./PokemonCard";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { Box, CircularProgress, Typography } from "@material-ui/core";
 
 function Pokedex() {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function Pokedex() {
   content = pokemons.map(
     (pokemon) =>
       pokemon.name.includes(searchQuery) && (
-        <Grid item key={pokemon.id} xs={12} sm={6} md={4}>
+        <Grid item key={pokemon.id} xs={12} sm={4} md={3}>
           <PokemonCard {...pokemon} />
         </Grid>
       )
@@ -46,10 +46,16 @@ function Pokedex() {
   }
 
   return (
-    <Grid container spacing={3} justify="center">
-      {content}
-      {status === "loading" && <CircularProgress color="secondary" />}
-    </Grid>
+    <>
+      <Grid container spacing={3} justify="center">
+        {content}
+      </Grid>
+      {status === "loading" && (
+        <Box textAlign="center" pt={2}>
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
+    </>
   );
 }
 
