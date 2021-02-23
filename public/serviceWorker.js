@@ -1,5 +1,12 @@
 let CACHE_NAME = "my-site-cache-v1";
-const urlsToCache = ["/", "/pokemons"];
+const urlsToCache = [
+  "/",
+  "/pokemons",
+  "/static/js/bundle.js",
+  "/index.html",
+  "/static/js/0.chunk.js",
+  "/static/js/main.chunk.js",
+];
 self.addEventListener("install", function (event) {
   // Perform install steps
   event.waitUntil(
@@ -17,7 +24,7 @@ self.addEventListener("fetch", function (event) {
       if (response) {
         return response;
       }
-      return fetch(event.request);
+      return fetch(event.request).catch(() => caches.match("index.html"));
     })
   );
 });
