@@ -35,7 +35,7 @@ function Pokedex() {
   content = pokemons.map(
     (pokemon) =>
       pokemon.name.includes(searchQuery) && (
-        <Grid item key={pokemon.id} xs={12} sm={4} md={3}>
+        <Grid item={true} key={pokemon.id} xs={12} sm={4} md={3}>
           <PokemonCard {...pokemon} />
         </Grid>
       )

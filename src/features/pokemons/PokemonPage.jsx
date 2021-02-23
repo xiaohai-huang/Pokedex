@@ -84,7 +84,7 @@ function PokemonPage() {
   return (
     <Grid container direction="column" alignContent="center">
       <Grid item sm={2} />
-      <>
+      <Grid item sm={10}>
         {content}
         <Box pt={2} pb={3}>
           <Button
@@ -96,7 +96,7 @@ function PokemonPage() {
             Go Back to Pokedex
           </Button>
         </Box>
-      </>
+      </Grid>
       <Grid item sm={2} />
     </Grid>
   );

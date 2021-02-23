@@ -21,7 +21,7 @@ function SettingsPage() {
   };
   return (
     <Container maxWidth="sm">
-      <Grid conatiner direction="column">
+      <Grid container direction="column">
         <Grid item>
           <Typography variant="h3">Pokedex Settings</Typography>
         </Grid>
